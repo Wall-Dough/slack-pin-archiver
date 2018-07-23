@@ -55,12 +55,13 @@ def get_general_channel_pins():
 
 def remove_pin(channel_id, item):
     """Removes the given pin from the given channel"""
-    payload = {'token': API_TOKEN, 'channel': channel_id}
+    headers = {'Authorization': 'Bearer ' + API_TOKEN}
+    payload = {'channel': channel_id}
     if (item['type'] == 'message'):
         payload['timestamp'] = item['message']['ts']
     else:
         return False
-    r = requests.post('https://slack.com/api/pins.remove', payload)
+    r = requests.post('https://slack.com/api/pins.remove', payload, headers=headers)
     json_data = r.json()
     if (not json_data['ok']):
         print('Couldn\'t remove pin')
