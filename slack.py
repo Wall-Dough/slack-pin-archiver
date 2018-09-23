@@ -47,7 +47,11 @@ def get_pins_from_channel(id):
         print('Couldn\'t get pins from channel id = ' + id)
         print('Reason: ' + json_data['error'])
         return []
-    return json_data['items']
+    messages = []
+    for item in json_data['items']:
+        if (item['type'] == 'message'):
+            messages.append(item)
+    return messages
 
 def get_general_channel_pins():
     """Returns the pins of the general channel"""
